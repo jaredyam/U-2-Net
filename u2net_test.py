@@ -51,18 +51,15 @@ def save_output(image_name,pred,d_dir):
 
     imo.save(d_dir+imidx+'.png')
 
-def main():
+def main(image_fpath, prediction_dir, model_dir):
 
     # --------- 1. get image path and name ---------
     model_name='u2net'#u2netp
 
 
 
-    image_dir = os.path.join(os.getcwd(), 'test_data', 'test_images')
-    prediction_dir = os.path.join(os.getcwd(), 'test_data', model_name + '_results' + os.sep)
-    model_dir = os.path.join(os.getcwd(), 'saved_models', model_name, model_name + '.pth')
 
-    img_name_list = glob.glob(image_dir + os.sep + '*')
+    img_name_list = [image_fpath, ]
     print(img_name_list)
 
     # --------- 2. dataloader ---------
@@ -119,4 +116,11 @@ def main():
         del d1,d2,d3,d4,d5,d6,d7
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--image-fpath', type=str, required=True)
+    parser.add_argument('--prediction-dir', type=str, required=True)
+    parser.add_argument('--model-dir', type=str, required=True)
+    args = parser.parse_args()
+
+    main(args.image_fpath, args.prediction_dir, args.model_dir)
