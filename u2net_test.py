@@ -49,7 +49,9 @@ def save_output(image_name,pred,d_dir):
     for i in range(1,len(bbb)):
         imidx = imidx + "." + bbb[i]
 
-    imo.save(d_dir+imidx+'_mask.png')
+    mask_fpath = d_dir + imidx + '_mask.png'
+    imo.save(mask_fpath)
+    print(f'Successfully saved mask of image ({image_name}) in: {mask_fpath}')
 
 def main(image_fpath, prediction_dir, model_fpath):
 
