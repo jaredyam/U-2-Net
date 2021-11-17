@@ -51,7 +51,7 @@ def save_output(image_name,pred,d_dir):
 
     imo.save(d_dir+imidx+'.png')
 
-def main(image_fpath, prediction_dir, model_dir):
+def main(image_fpath, prediction_dir, model_fpath):
 
     # --------- 1. get image path and name ---------
     model_name='u2net'#u2netp
@@ -83,10 +83,10 @@ def main(image_fpath, prediction_dir, model_dir):
         net = U2NETP(3,1)
 
     if torch.cuda.is_available():
-        net.load_state_dict(torch.load(model_dir))
+        net.load_state_dict(torch.load(model_fpath))
         net.cuda()
     else:
-        net.load_state_dict(torch.load(model_dir, map_location='cpu'))
+        net.load_state_dict(torch.load(model_fpath, map_location='cpu'))
     net.eval()
 
     # --------- 4. inference for each image ---------
@@ -120,7 +120,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--image-fpath', type=str, required=True)
     parser.add_argument('--prediction-dir', type=str, required=True)
-    parser.add_argument('--model-dir', type=str, required=True)
+    parser.add_argument('--model-fpath', type=str, required=True)
     args = parser.parse_args()
 
-    main(args.image_fpath, args.prediction_dir, args.model_dir)
+    main(args.image_fpath, args.prediction_dir, args.model_fpath)
